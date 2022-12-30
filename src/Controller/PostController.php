@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Interfaces\PostRepositoryInterface;
+use App\Models\Params;
 
 #[Route(path: "/posts", name: "posts_")]
 class PostController extends AbstractController
@@ -17,7 +18,8 @@ class PostController extends AbstractController
     #[Route(path: "", name: "all", methods: ["GET"])]
     function all(PostRepositoryInterface $repository, Request $request): Response
     {
-        $data = $repository->getPosts($request);
+        $params= new Params($request->query->all());
+        $data = $repository->getPosts($params);
 
         return $this->json($data, 200, ["Content-Type" => "application/json"]);
     }
@@ -28,19 +30,21 @@ class PostController extends AbstractController
     #[Route(path: "/{id}", name: "show", methods: ["GET"])]
     function show(PostRepositoryInterface $repository, Request $request, int $id): Response
     {
-    	$data = $repository->getPost($request, $id);
+        $params= new Params($request->query->all());
+        $data = $repository->getPost($params, $id);
 
-		return $this->json($data, 200, ["Content-Type" => "application/json"]);
+        return $this->json($data, 200, ["Content-Type" => "application/json"]);
     }
 
     /**
      * Get comments on the posts (question or answer) identified by a set of ids.
     */
-   	#[Route(path: "/{id}/comments", name: "post_comments", methods: ["GET"])]
+    #[Route(path: "/{id}/comments", name: "post_comments", methods: ["GET"])]
     function comments(PostRepositoryInterface $repository, Request $request, int $id): Response
     {
-    	$data = $repository->getPostComents($request, $id);
+        $params= new Params($request->query->all());
+        $data = $repository->getPostComents($params, $id);
 
-		return $this->json($data, 200, ["Content-Type" => "application/json"]);
+        return $this->json($data, 200, ["Content-Type" => "application/json"]);
     }
 }

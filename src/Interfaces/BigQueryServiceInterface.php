@@ -2,15 +2,15 @@
 namespace App\Interfaces;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
-use Symfony\Component\HttpFoundation\Request;
+use App\Models\Params;
 
 interface BigQueryServiceInterface
 {
     public function __construct(ContainerBagInterface $params);
 
-    public function getPostList(Request $request): array;
+    public function getPostList(Params $params): array;
 
-    public function getPost(Request $request, int $id): array;
+    public function getPost(Params $params, int $id): array;
 
-    public function getPostComents(Request $request, int $postId): array;
+    public function getPostComents(Params $params, int $postId): array;
 }

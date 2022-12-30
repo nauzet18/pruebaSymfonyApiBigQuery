@@ -1,13 +1,13 @@
 <?php
 namespace App\Interfaces;
 
-use Symfony\Component\HttpFoundation\Request;
+use App\Models\Params;
 
 interface PostRepositoryInterface
 {
-    public function getPosts(Request $request): array;
+    public function getPosts(Params $params): array;
 
-    public function getPost(Request $request, int $id): array;
+    public function getPost(Params $params, int $id): array;
 
-    public function getPostComents(Request $request, int $postId): array;
+    public function getPostComents(Params $params, int $postId): array;
 }

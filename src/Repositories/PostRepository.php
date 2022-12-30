@@ -1,10 +1,9 @@
 <?php
 namespace App\Repositories;
 
-use Symfony\Component\HttpFoundation\Request;
-
 use App\Interfaces\PostRepositoryInterface;
 use App\Interfaces\BigQueryServiceInterface;
+use App\Models\Params;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -15,10 +14,10 @@ class PostRepository implements PostRepositoryInterface
         $this->bigQueryClient = $bigQueryClient;
     }
 
-    public function getPosts(Request $request): array
+    public function getPosts(Params $params): array
     {
         try {
-            $posts = $this->bigQueryClient->getPostList($request);
+            $posts = $this->bigQueryClient->getPostList($params);
             //TODO: serializar
 
         } catch (\Exception $e) {
@@ -28,11 +27,11 @@ class PostRepository implements PostRepositoryInterface
         return $posts;
     }
 
-    public function getPost(Request $request, int $id): array
+    public function getPost(Params $params, int $id): array
     {
         try {
 
-            $post = $this->bigQueryClient->getPost($request, $id);
+            $post = $this->bigQueryClient->getPost($params, $id);
             //TODO: serializar
 
         } catch (\Exception $e) {
@@ -42,11 +41,11 @@ class PostRepository implements PostRepositoryInterface
         return $post;
     }
 
-    public function getPostComents(Request $request, int $postId): array
+    public function getPostComents(Params $params, int $postId): array
     {
         try {
 
-            $coments = $this->bigQueryClient->getPostComents($request, $postId);
+            $coments = $this->bigQueryClient->getPostComents($params, $postId);
             //TODO: serializar
 
         } catch (\Exception $e) {

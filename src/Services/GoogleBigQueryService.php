@@ -5,6 +5,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Google\Cloud\BigQuery\BigQueryClient;
 use App\Interfaces\BigQueryServiceInterface;
+use App\Models\Params;
 
 class GoogleBigQueryService implements BigQueryServiceInterface
 {
@@ -26,21 +27,24 @@ class GoogleBigQueryService implements BigQueryServiceInterface
         ]);
     }
 
-    public function getPostList(Request $request): array
+    public function getPostList(Params $params): array
     {
+        $numLimit = $params->get('limit', 10);
+        $keyOrder = $params->get('order', 'id');
+        $directionOrder = $params->get('direction', 'DESC');
+
         $query = <<<ENDSQL
         SELECT *
         FROM `bigquery-public-data.stackoverflow.posts_questions`
-        WHERE tags like '%google-bigquery%'
-        ORDER BY id DESC
-        LIMIT 10;
+        ORDER BY $keyOrder $directionOrder
+        LIMIT $numLimit;
         ENDSQL;
         $this->setQuery($query);
 
         return $this->getResults();
     }
 
-    public function getPost(Request $request, int $id): array
+    public function getPost(Params $params, int $id): array
     {
         $query = <<<ENDSQL
         SELECT *
@@ -54,14 +58,18 @@ class GoogleBigQueryService implements BigQueryServiceInterface
         return $this->getResults();
     }
 
-    public function getPostComents(Request $request, int $postId): array
+    public function getPostComents(Params $params, int $postId): array
     {
+        $numLimit = $params->get('limit', 10);
+        $keyOrder = $params->get('order', 'id');
+        $directionOrder = $params->get('direction', 'DESC');
+
         $query = <<<ENDSQL
         SELECT *
         FROM `bigquery-public-data.stackoverflow.comments`
         WHERE post_id = $postId
-        ORDER BY id DESC
-        LIMIT 10;
+        ORDER BY $keyOrder $directionOrder
+        LIMIT $numLimit;
         ENDSQL;
 
         $this->setQuery($query);
