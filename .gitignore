@@ -9,3 +9,13 @@
 /vendor/
 ###< symfony/framework-bundle ###
 /pruebastackoverflow-ea39d129ac90.json
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

@@ -19,7 +19,6 @@ class GoogleBigQueryService implements BigQueryServiceInterface
         $file = $this->params->get('app.google_credentials_file_name');
         $projectId = $this->params->get('app.google_bigquery_project_id');
 
-        //NOTA: consultar esto por q no consigo hacerlo de otra forma
         putenv("GOOGLE_APPLICATION_CREDENTIALS=$projectRoot/$file");
 
         $this->bigQueryClient = new BigQueryClient([

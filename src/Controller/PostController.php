@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Interfaces\PostRepositoryInterface;
-use App\Repositories\PostRepository;
 
 #[Route(path: "/posts", name: "posts_")]
 class PostController extends AbstractController

@@ -1,0 +1,4 @@
+services:
+    App\Interfaces\BigQueryServiceInterface:
+        alias: App\Services\GoogleBigQueryService
+        public: true

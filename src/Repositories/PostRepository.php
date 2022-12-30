@@ -18,7 +18,6 @@ class PostRepository implements PostRepositoryInterface
     public function getPosts(Request $request): array
     {
         try {
-
             $posts = $this->bigQueryClient->getPostList($request);
             //TODO: serializar
 
